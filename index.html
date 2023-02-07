@@ -7,12 +7,93 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ErholtTOMos</title>
 
-  <script src="script" defer></script>
   <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+
 </head>
 
 <body>
   <div class="gradient"></div>
-</body>
+  <div class="info-text">For at ændre animation skal du klikke på cirklen i midten</div>
 
+  <aside class="sidebar">
+    <h1>Settings</h1>
+    <div>
+      <label for="bg-color">Background color</label>
+      <div>
+        <input id="bg-color" name="bg-color" type="color">
+      </div>
+    </div>
+
+    <div>
+      <label for="primary-color">Primary color</label>
+      <div>
+        <input id="primary-color" name="primary-color" type="color">
+      </div>
+    </div>
+
+    <div>
+      <label for="secondary-color">Secondary color</label>
+      <div>
+        <input id="secondary-color" name="secondary-color" type="color">
+      </div>
+    </div>
+
+    <div>
+      <label for="animation-duration">Animation duration (seconds)</label>
+      <div>
+        <input id="animation-duration" name="animation-duration" type="number" min="1">
+      </div>
+    </div>
+
+    <!-- <div>
+      <label for="animation-duration">Animation direction</label>
+      <div class="animation-direction">
+        <div>
+          <label for="normal">Normal</label>
+          <input type="radio" name="direcetion" id="normal">
+        </div>
+        <div>
+          <label for="reverse">Reverse</label>
+          <input type="radio" name="direcetion" id="reverse">
+        </div>
+        <div>
+          <label for="alternate">Alternate</label>
+          <input type="radio" name="direcetion" id="alternate">
+        </div>
+        <div>
+          <label for="reverse-alternate">Alternate-Reverse</label>
+          <input type="radio" name="direcetion" id="reverse-alternate">
+        </div>
+      </div>
+    </div> -->
+
+    <div>
+      <label for="">Border radius (%)</label>
+      <div class="border">
+        <input id="border_top-left-1" name="border_top-left-1" type="number" min="0" max="100">
+        <input id="border_top-right-1" name="border_top-right-1" type="number" min="0" max="100">
+        <input id="border_bottom-right-1" name="border_bottom-right-1" type="number" min="0" max="100">
+        <input id="border_bottom-left-1" name="border_bottom-left-1" type="number" min="0" max="100">
+        <span>/</span>
+        <input id="border_top-left-2" name="border_top-left-2" type="number" min="0" max="100">
+        <input id="border_top-right-2" name="border_top-right-2" type="number" min="0" max="100">
+        <input id="border_bottom-right-2" name="border_bottom-right-2" type="number" min="0" max="100">
+        <input id="border_bottom-left-2" name="border_bottom-left-2" type="number" min="0" max="100">
+      </div>
+    </div>
+
+    <div>
+      <label for="blur-effect">Blur effect (px)</label>
+      <div>
+        <input id="blur-effect" name="blur-effect" type="number" min="0">
+      </div>
+    </div>
+
+    <!-- <div>
+      <button id="reset">Reset to default</button>
+    </div> -->
+
+  </aside>
+</body>
 </html>
