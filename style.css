@@ -7,21 +7,91 @@
   }
 }
 
+.visible {
+  left: 0 !important;
+}
+
 body {
   height: 100vh;
   background-color: rgb(7, 7, 39);
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow-y: hidden;
+}
+
+.info-text {
+  position: absolute;
+    background: white;
+    opacity: .8;
+    padding: 2em;
+    font-size: 2em;
 }
 
 .gradient {
+  cursor: pointer;
   height: 70vh;
   width: 70vw;
-  background-image: linear-gradient(red, blue);
+  background-image: linear-gradient(#ff0000, #0000ff);
   animation: 10s cubic-bezier(0.8, 0.2, 0.2, 0.8) 0s infinite alternate none running rotate;
   border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
   filter: blur(100px);
+}
+
+.sidebar {
+  height: 100vh;
+  width: 25vw;
+  background: #070727;
+  color: white;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: .4s;
+  z-index: 1;
+  border-right: 5px solid;
+  left: calc(-25vw - 5px);
+  overflow: scroll;
+}
+
+.sidebar > div {
+  border-top: solid 3px;
+  width: 100%;
+  text-align: center;
+  padding: 1em 0;
+}
+
+.sidebar > div > div {
+  display: flex;
+  justify-content: center;
+  gap: .5em;
+  padding: 1em;
+}
+
+.sidebar > div > div span{
+  /* width: ; */
+  padding: .8em;
+  font-weight: 900;
+}
+.sidebar > div > div input{
+  width: 50%;
+}
+.sidebar > div > div input[type="color"]{
+  width: 50%;
+  justify-self: center;
+  height: 50px;
+  padding: 0;
+}
+.border input{
+  width: 100%;
+  padding: 0;
+}
+.animation-direction {
+  flex-direction: column;
+}
+.animation-direction div {
+  display: flex;
+  justify-content: flex-end;
 }
 
 @media screen and (min-width: 767px) {
