@@ -36,6 +36,9 @@ body {
   animation: 10s cubic-bezier(0.8, 0.2, 0.2, 0.8) 0s infinite alternate none running rotate;
   border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
   filter: blur(100px);
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
 }
 
 .sidebar {
@@ -85,10 +88,10 @@ body {
   width: 100%;
   padding: 0;
 }
-.animation-direction {
+.radio-container {
   flex-direction: column;
 }
-.animation-direction div {
+.radio-container div {
   display: flex;
   justify-content: flex-end;
 }
