@@ -11,26 +11,34 @@ default_local_storage_items = {
     { "key": "primary-color", "value": "#ff0000", "function": "update_gradient" },
     { "key": "secondary-color", "value": "#0000ff", "function": "update_gradient" },
 
-    { "key": "blur-effect", "value": "100", "function": "update_gradient" },
+    { "key": "blur-effect", "value": 100, "function": "update_gradient" },
 
-    { "key": "animation-duration", "value": "30", "function": "update_gradient" },
+    { "key": "animation-duration", "value": 30, "function": "update_gradient" },
     {
       "key": "animation-direction", "value": [
-        { "key": "normal", "value": "" },
-        { "key": "reverse", "value": "" },
+        { "key": "normal", "value": false },
+        { "key": "reverse", "value": false },
         { "key": "alternate", "value": true },
-        { "key": "alternate-reverse", "value": "" },
+        { "key": "alternate-reverse", "value": false },
+      ], "function": "update_gradient"
+    },
+    {
+      "key": "animation-timing", "value": [
+        { "key": "ease", "value": false },
+        { "key": "linear", "value": true },
+        { "key": "ease-in", "value": false },
+        { "key": "ease-out", "value": false },
       ], "function": "update_gradient"
     },
 
-    { "key": "border_top-left-1", "value": "30", "function": "update_gradient" },
-    { "key": "border_top-right-1", "value": "70", "function": "update_gradient" },
-    { "key": "border_bottom-right-1", "value": "70", "function": "update_gradient" },
-    { "key": "border_bottom-left-1", "value": "30", "function": "update_gradient" },
-    { "key": "border_top-left-2", "value": "30", "function": "update_gradient" },
-    { "key": "border_top-right-2", "value": "30", "function": "update_gradient" },
-    { "key": "border_bottom-right-2", "value": "70", "function": "update_gradient" },
-    { "key": "border_bottom-left-2", "value": "70", "function": "update_gradient" }
+    { "key": "border_top-left-1", "value": 30, "function": "update_gradient" },
+    { "key": "border_top-right-1", "value": 70, "function": "update_gradient" },
+    { "key": "border_bottom-right-1", "value": 70, "function": "update_gradient" },
+    { "key": "border_bottom-left-1", "value": 30, "function": "update_gradient" },
+    { "key": "border_top-left-2", "value": 30, "function": "update_gradient" },
+    { "key": "border_top-right-2", "value": 30, "function": "update_gradient" },
+    { "key": "border_bottom-right-2", "value": 70, "function": "update_gradient" },
+    { "key": "border_bottom-left-2", "value": 70, "function": "update_gradient" }
   ]
 }
 
@@ -38,7 +46,7 @@ default_local_storage_items["items"].forEach(option => {
   if (typeof option.value == "object") {
     option.value.forEach(suboption => {
       if (localStorage.getItem(option.key) == null && suboption.value) {
-        localStorage.setItem(key, suboption.key)
+        localStorage.setItem(option.key, suboption.key)
       }
 
       let input = document.querySelector(`#${suboption.key}`)
@@ -46,6 +54,8 @@ default_local_storage_items["items"].forEach(option => {
       if (suboption.key == localStorage.getItem(option.key)) {
         input.checked = true
       }
+
+      console.log(suboption)
 
       input.addEventListener("input", function (e) {
         localStorage.setItem(option.key, e.target.id)
@@ -76,6 +86,7 @@ function update_gradient() {
   gradient.style.backgroundImage = `linear-gradient(${localStorage.getItem("primary-color")}, ${localStorage.getItem("secondary-color")})`;
   gradient.style.animationDuration = `${localStorage.getItem("animation-duration")}s`;
   gradient.style.animationDirection = localStorage.getItem("animation-direction")
+  gradient.style.animationTimingFunction = localStorage.getItem("animation-timing")
   gradient.style.borderRadius =
     `
     ${localStorage.getItem("border_top-left-1")}%
