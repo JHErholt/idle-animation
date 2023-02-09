@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ErholtTOMos</title>
+  <title>Idle-animation</title>
 
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
@@ -14,7 +14,7 @@
 
 <body>
   <div class="gradient"></div>
-  <div class="info-text">For at ændre animation skal du klikke på cirklen i midten</div>
+  <div class="info-text">For at ændre animation skal du klikke på tingen i midten</div>
 
   <aside class="sidebar">
     <h1>Settings</h1>
@@ -64,6 +64,28 @@
         <div>
           <label for="reverse-alternate">Alternate-Reverse</label>
           <input type="radio" name="animation-direcetion" id="alternate-reverse">
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <label for="animation-duration">Animation timing</label>
+      <div class="animation-direction">
+        <div>
+          <label for="ease">Ease</label>
+          <input type="radio" name="animation-timing" id="ease">
+        </div>
+        <div>
+          <label for="linear">Linear</label>
+          <input type="radio" name="animation-timing" id="linear">
+        </div>
+        <div>
+          <label for="ease-in">Ease-in</label>
+          <input type="radio" name="animation-timing" id="ease-in">
+        </div>
+        <div>
+          <label for="ease-out">Ease-out</label>
+          <input type="radio" name="animation-timing" id="ease-out">
         </div>
       </div>
     </div>
