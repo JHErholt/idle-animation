@@ -1,103 +1,127 @@
-@keyframes rotate {
-  0% {
-    transform: rotate(0deg);
+gradient = document.querySelector(".gradient");
+
+gradient.addEventListener("click", function () {
+  document.querySelector(".sidebar").classList.toggle("visible")
+});
+
+default_local_storage_items = {
+  "items": [
+    { "key": "bg-color", "value": "#070727", "function": "update_background" },
+
+    { "key": "primary-color", "value": "#ff0000", "function": "update_gradient" },
+    { "key": "secondary-color", "value": "#0000ff", "function": "update_gradient" },
+
+    { "key": "blur-effect", "value": "100", "function": "update_gradient" },
+
+    { "key": "animation-duration", "value": "30", "function": "update_gradient" },
+    {
+      "key": "animation-direction", "value": [
+        { "key": "normal", "value": "" },
+        { "key": "reverse", "value": "" },
+        { "key": "alternate", "value": true },
+        { "key": "alternate-reverse", "value": "" },
+      ], "function": "update_gradient"
+    },
+
+    { "key": "border_top-left-1", "value": "30", "function": "update_gradient" },
+    { "key": "border_top-right-1", "value": "70", "function": "update_gradient" },
+    { "key": "border_bottom-right-1", "value": "70", "function": "update_gradient" },
+    { "key": "border_bottom-left-1", "value": "30", "function": "update_gradient" },
+    { "key": "border_top-left-2", "value": "30", "function": "update_gradient" },
+    { "key": "border_top-right-2", "value": "30", "function": "update_gradient" },
+    { "key": "border_bottom-right-2", "value": "70", "function": "update_gradient" },
+    { "key": "border_bottom-left-2", "value": "70", "function": "update_gradient" }
+  ]
+}
+
+default_local_storage_items["items"].forEach(option => {
+  if (typeof option.value == "object") {
+    option.value.forEach(suboption => {
+      if (localStorage.getItem(option.key) == null && suboption.value) {
+        localStorage.setItem(key, suboption.key)
+      }
+
+      let input = document.querySelector(`#${suboption.key}`)
+
+      if (suboption.key == localStorage.getItem(option.key)) {
+        input.checked = true
+      }
+
+      input.addEventListener("input", function (e) {
+        localStorage.setItem(option.key, e.target.id)
+        window[option.function]()
+      })
+    })
+
+  } else {
+    if (localStorage.getItem(option.key) == null) {
+      localStorage.setItem(option.key, option.value)
+    }
+
+    let input = document.querySelector(`#${option.key}`)
+    input.value = localStorage.getItem(option.key)
+
+    input.addEventListener("input", function (e) {
+      localStorage.setItem(option.key, e.target.value)
+      window[option.function]()
+    })
   }
-  100% {
-    transform: rotate(360deg);
+})
+
+function update_background() {
+  document.querySelector("body").style.backgroundColor = localStorage.getItem("bg-color");
+}
+
+function update_gradient() {
+  gradient.style.backgroundImage = `linear-gradient(${localStorage.getItem("primary-color")}, ${localStorage.getItem("secondary-color")})`;
+  gradient.style.animationDuration = `${localStorage.getItem("animation-duration")}s`;
+  gradient.style.animationDirection = localStorage.getItem("animation-direction")
+  gradient.style.borderRadius =
+    `
+    ${localStorage.getItem("border_top-left-1")}%
+    ${localStorage.getItem("border_top-right-1")}%
+    ${localStorage.getItem("border_bottom-right-1")}%
+    ${localStorage.getItem("border_bottom-left-1")}%
+    /
+    ${localStorage.getItem("border_top-left-2")}%
+    ${localStorage.getItem("border_top-right-2")}%
+    ${localStorage.getItem("border_bottom-right-2")}%
+    ${localStorage.getItem("border_bottom-left-2")}%
+    `;
+  gradient.style.filter = `blur(${localStorage.getItem("blur-effect")}px)`;
+}
+
+function reset_to_default() {
+  if (confirm("Are you sure?, this will delete all your settings")) {
+    default_local_storage_items["items"].forEach(option => {
+
+      if (typeof option.value == "object") {
+        option.value.forEach(suboption => {
+          let input = document.querySelector(`#${suboption.key}`)
+
+          if (suboption.value) {
+            localStorage.setItem(option.key, suboption.key)
+            input.checked = true
+          }
+        });
+
+      } else {
+        let input = document.querySelector(`#${option.key}`)
+        localStorage.setItem(option.key, option.value)
+        input.value = localStorage.getItem(option.key)
+      }
+    })
+
+    update_background()
+    update_gradient()
   }
 }
 
-.visible {
-  left: 0 !important;
-}
+update_background()
+update_gradient()
 
-body {
-  height: 100vh;
-  background-color: rgb(7, 7, 39);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow-y: hidden;
-}
+document.querySelector("#reset").addEventListener("click", reset_to_default)
 
-.info-text {
-  position: absolute;
-    background: white;
-    opacity: .8;
-    padding: 2em;
-    font-size: 2em;
-}
-
-.gradient {
-  cursor: pointer;
-  height: 70vh;
-  width: 70vw;
-  background-image: linear-gradient(#ff0000, #0000ff);
-  animation: 10s cubic-bezier(0.8, 0.2, 0.2, 0.8) 0s infinite alternate none running rotate;
-  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-  filter: blur(100px);
-}
-
-.sidebar {
-  height: 100vh;
-  width: 25vw;
-  background: #070727;
-  color: white;
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: .4s;
-  z-index: 1;
-  border-right: 5px solid;
-  left: calc(-25vw - 5px);
-  overflow: scroll;
-}
-
-.sidebar > div {
-  border-top: solid 3px;
-  width: 100%;
-  text-align: center;
-  padding: 1em 0;
-}
-
-.sidebar > div > div {
-  display: flex;
-  justify-content: center;
-  gap: .5em;
-  padding: 1em;
-}
-
-.sidebar > div > div span{
-  /* width: ; */
-  padding: .8em;
-  font-weight: 900;
-}
-.sidebar > div > div input{
-  width: 50%;
-}
-.sidebar > div > div input[type="color"]{
-  width: 50%;
-  justify-self: center;
-  height: 50px;
-  padding: 0;
-}
-.border input{
-  width: 100%;
-  padding: 0;
-}
-.animation-direction {
-  flex-direction: column;
-}
-.animation-direction div {
-  display: flex;
-  justify-content: flex-end;
-}
-
-@media screen and (min-width: 767px) {
-  .gradient {
-    height: 40vh;
-    width: 40vw;
-    filter: blur(100px);
-  }
-}
+setTimeout(() => {
+  document.querySelector(".info-text").remove()
+}, 4500)
