@@ -1,98 +1,81 @@
 gradient = document.querySelector(".gradient");
 
-gradient.addEventListener("click", function() {
+gradient.addEventListener("click", function () {
   document.querySelector(".sidebar").classList.toggle("visible")
 });
 
 default_local_storage_items = {
-  "items":[
-    {"key":"bg-color", "value":"#070727", "function":"update_background"},
+  "items": [
+    { "key": "bg-color", "value": "#070727", "function": "update_background" },
 
-    {"key":"primary-color", "value":"#ff0000", "function":"update_gradient_background"},
-    {"key":"secondary-color", "value":"#0000ff", "function":"update_gradient_background"},
+    { "key": "primary-color", "value": "#ff0000", "function": "update_gradient" },
+    { "key": "secondary-color", "value": "#0000ff", "function": "update_gradient" },
 
-    {"key":"blur-effect", "value":"100", "function":"update_gradient_blur_effect"},
+    { "key": "blur-effect", "value": "100", "function": "update_gradient" },
 
-    {"key":"animation-duration", "value":"30", "function":"update_gradient_animation_duration"},
-    {"key":"animation-direction", "value":[
-      {"key":"normal", "value":""},
-      {"key":"reverse", "value":""},
-      {"key":"alternate", "value":true},
-      {"key":"alternate-reverse", "value":""},
-    ], "function":"update_gradient_animation_direction"},
+    { "key": "animation-duration", "value": "30", "function": "update_gradient" },
+    {
+      "key": "animation-direction", "value": [
+        { "key": "normal", "value": "" },
+        { "key": "reverse", "value": "" },
+        { "key": "alternate", "value": true },
+        { "key": "alternate-reverse", "value": "" },
+      ], "function": "update_gradient"
+    },
 
-    {"key":"border_top-left-1", "value":"30", "function":"update_gradient_border_radius"},
-    {"key":"border_top-right-1", "value":"70", "function":"update_gradient_border_radius"},
-    {"key":"border_bottom-right-1", "value":"70", "function":"update_gradient_border_radius"},
-    {"key":"border_bottom-left-1", "value":"30", "function":"update_gradient_border_radius"},
-    {"key":"border_top-left-2", "value":"30", "function":"update_gradient_border_radius"},
-    {"key":"border_top-right-2", "value":"30", "function":"update_gradient_border_radius"},
-    {"key":"border_bottom-right-2", "value":"70", "function":"update_gradient_border_radius"},
-    {"key":"border_bottom-left-2", "value":"70", "function":"update_gradient_border_radius"}
+    { "key": "border_top-left-1", "value": "30", "function": "update_gradient" },
+    { "key": "border_top-right-1", "value": "70", "function": "update_gradient" },
+    { "key": "border_bottom-right-1", "value": "70", "function": "update_gradient" },
+    { "key": "border_bottom-left-1", "value": "30", "function": "update_gradient" },
+    { "key": "border_top-left-2", "value": "30", "function": "update_gradient" },
+    { "key": "border_top-right-2", "value": "30", "function": "update_gradient" },
+    { "key": "border_bottom-right-2", "value": "70", "function": "update_gradient" },
+    { "key": "border_bottom-left-2", "value": "70", "function": "update_gradient" }
   ]
 }
 
-for (i = 0; i < default_local_storage_items["items"].length; i++) {
-  let key = default_local_storage_items["items"][i].key
-  let value = default_local_storage_items["items"][i].value
-  let item_function = default_local_storage_items["items"][i].function
-
-  if (typeof value == "object") {
-
-    for (let index = 0; index < value.length; index++) {
-      let obj = value[index];
-
-      if (localStorage.getItem(key) == null && obj.value) {
-        localStorage.setItem(key, obj.key)
+default_local_storage_items["items"].forEach(option => {
+  if (typeof option.value == "object") {
+    option.value.forEach(suboption => {
+      if (localStorage.getItem(option.key) == null && suboption.value) {
+        localStorage.setItem(key, suboption.key)
       }
 
-      let input = document.querySelector(`#${obj.key}`)
+      let input = document.querySelector(`#${suboption.key}`)
 
-      if (obj.key == localStorage.getItem(key)) {
+      if (suboption.key == localStorage.getItem(option.key)) {
         input.checked = true
       }
 
-      input.addEventListener("input", function(e) {
-        localStorage.setItem(key, e.target.id)
-        window[item_function]()
+      input.addEventListener("input", function (e) {
+        localStorage.setItem(option.key, e.target.id)
+        window[option.function]()
       })
-    }
+    })
 
   } else {
-    if (localStorage.getItem(key) == null) {
-      localStorage.setItem(key, value)
+    if (localStorage.getItem(option.key) == null) {
+      localStorage.setItem(option.key, option.value)
     }
 
-    let input = document.querySelector(`#${key}`)
-    input.value = localStorage.getItem(key)
+    let input = document.querySelector(`#${option.key}`)
+    input.value = localStorage.getItem(option.key)
 
-    input.addEventListener("input", function(e) {
-      localStorage.setItem(key, e.target.value)
-      window[item_function]()
+    input.addEventListener("input", function (e) {
+      localStorage.setItem(option.key, e.target.value)
+      window[option.function]()
     })
   }
+})
+
+function update_background() {
+  document.querySelector("body").style.backgroundColor = localStorage.getItem("bg-color");
 }
 
-  function update_background() {
-    document.querySelector("body").style.backgroundColor =
-    localStorage.getItem("bg-color");
-  }
-
-function update_gradient_background() {
-  gradient.style.backgroundImage =
-    `linear-gradient(${localStorage.getItem("primary-color")}, ${localStorage.getItem("secondary-color")})`;
-}
-
-function update_gradient_animation_duration() {
-  gradient.style.animationDuration =
-    `${localStorage.getItem("animation-duration")}s`;
-}
-
-function update_gradient_animation_direction() {
+function update_gradient() {
+  gradient.style.backgroundImage = `linear-gradient(${localStorage.getItem("primary-color")}, ${localStorage.getItem("secondary-color")})`;
+  gradient.style.animationDuration = `${localStorage.getItem("animation-duration")}s`;
   gradient.style.animationDirection = localStorage.getItem("animation-direction")
-}
-
-function update_gradient_border_radius() {
   gradient.style.borderRadius =
     `
     ${localStorage.getItem("border_top-left-1")}%
@@ -104,47 +87,38 @@ function update_gradient_border_radius() {
     ${localStorage.getItem("border_top-right-2")}%
     ${localStorage.getItem("border_bottom-right-2")}%
     ${localStorage.getItem("border_bottom-left-2")}%
-    `
-}
-
-function update_gradient_blur_effect() {
-  gradient.style.filter =
-    `blur(${localStorage.getItem("blur-effect")}px)`;
+    `;
+  gradient.style.filter = `blur(${localStorage.getItem("blur-effect")}px)`;
 }
 
 function reset_to_default() {
-  let defaults = default_local_storage_items["items"]
+  if (confirm("Are you sure?, this will delete all your settings")) {
+    default_local_storage_items["items"].forEach(option => {
 
-  for (let i = 0; i < defaults.length; i++) {
-    key = defaults[i].key
-    value = defaults[i].value
+      if (typeof option.value == "object") {
+        option.value.forEach(suboption => {
+          let input = document.querySelector(`#${suboption.key}`)
 
-    if (typeof value == "object") {
-      value.forEach(obj => {
-        if (obj.value) {
-          localStorage.setItem(key, obj.key)
-        }
-      });
+          if (suboption.value) {
+            localStorage.setItem(option.key, suboption.key)
+            input.checked = true
+          }
+        });
 
-    } else {
-      localStorage.setItem(key, value)
-    }
+      } else {
+        let input = document.querySelector(`#${option.key}`)
+        localStorage.setItem(option.key, option.value)
+        input.value = localStorage.getItem(option.key)
+      }
+    })
+
+    update_background()
+    update_gradient()
   }
-
-  update_background()
-  update_gradient_background()
-  update_gradient_animation_duration()
-  update_gradient_animation_direction()
-  update_gradient_border_radius()
-  update_gradient_blur_effect()
 }
 
 update_background()
-update_gradient_background()
-update_gradient_animation_duration()
-update_gradient_animation_direction()
-update_gradient_border_radius()
-update_gradient_blur_effect()
+update_gradient()
 
 document.querySelector("#reset").addEventListener("click", reset_to_default)
 
