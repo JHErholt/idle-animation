@@ -11,9 +11,14 @@ default_local_storage_items = {
     { "key": "primary-color", "value": "#ff0000", "function": "update_gradient" },
     { "key": "secondary-color", "value": "#0000ff", "function": "update_gradient" },
 
-    { "key": "blur-effect", "value": 100, "function": "update_gradient" },
+    {
+      "key": "size", "value": [
+        { "key": "standard", "value": false },
+        { "key": "equal-height-width", "value": true },
+      ], "function": "update_gradient"
+    },
 
-    { "key": "animation-duration", "value": 30, "function": "update_gradient" },
+    { "key": "animation-duration", "value": 10, "function": "update_gradient" },
     {
       "key": "animation-direction", "value": [
         { "key": "normal", "value": false },
@@ -31,15 +36,18 @@ default_local_storage_items = {
       ], "function": "update_gradient"
     },
 
-    { "key": "border_top-left-1", "value": 30, "function": "update_gradient" },
-    { "key": "border_top-right-1", "value": 70, "function": "update_gradient" },
-    { "key": "border_bottom-right-1", "value": 70, "function": "update_gradient" },
-    { "key": "border_bottom-left-1", "value": 30, "function": "update_gradient" },
-    { "key": "border_top-left-2", "value": 30, "function": "update_gradient" },
-    { "key": "border_top-right-2", "value": 30, "function": "update_gradient" },
-    { "key": "border_bottom-right-2", "value": 70, "function": "update_gradient" },
-    { "key": "border_bottom-left-2", "value": 70, "function": "update_gradient" }
+    { "key": "border_top-left-1", "value": 100, "function": "update_gradient" },
+    { "key": "border_top-right-1", "value": 0, "function": "update_gradient" },
+    { "key": "border_bottom-right-1", "value": 100, "function": "update_gradient" },
+    { "key": "border_bottom-left-1", "value": 100, "function": "update_gradient" },
+    { "key": "border_top-left-2", "value": 100, "function": "update_gradient" },
+    { "key": "border_top-right-2", "value": 100, "function": "update_gradient" },
+    { "key": "border_bottom-right-2", "value": 100, "function": "update_gradient" },
+    { "key": "border_bottom-left-2", "value": 0, "function": "update_gradient" },
+
+    { "key": "blur-effect", "value": 60, "function": "update_gradient" }
   ]
+
 }
 
 default_local_storage_items["items"].forEach(option => {
@@ -54,8 +62,6 @@ default_local_storage_items["items"].forEach(option => {
       if (suboption.key == localStorage.getItem(option.key)) {
         input.checked = true
       }
-
-      console.log(suboption)
 
       input.addEventListener("input", function (e) {
         localStorage.setItem(option.key, e.target.id)
@@ -100,6 +106,14 @@ function update_gradient() {
     ${localStorage.getItem("border_bottom-left-2")}%
     `;
   gradient.style.filter = `blur(${localStorage.getItem("blur-effect")}px)`;
+
+  if (localStorage.getItem("size") == "standard") {
+    gradient.style.height = "40vh"
+    gradient.style.width = "40vw"
+  } else {
+    gradient.style.height = "30vw"
+    gradient.style.width = "30vw"
+  }
 }
 
 function reset_to_default() {
